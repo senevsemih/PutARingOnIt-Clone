@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94253124d70146d4b563642d60de7b63, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  LevelIndex: 1
+  Score: 0
+  SuccessScoreValue: 0
+  ScoreAnimationDuration: 0
   DragSpeed: 0
   RoadLimit: 0

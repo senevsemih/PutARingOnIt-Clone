@@ -3,18 +3,24 @@ using UnityEngine;
 
 namespace Scripts.PutARingOnIt.GameElements
 {
-    public class InputDragHandler : MonoBehaviour
+    public class InputController : MonoBehaviour
     {
+        public static event Action DidTap; 
         public static event Action<Vector3> DidDrag;
+        
         private Vector3? _lastPosition;
-
-        private bool _isActive;
-        public void SetActive(bool value) => _isActive = value;
+        private bool _isDragActive;
 
         private void Update()
         {
-            if (!_isActive) return;
-
+            if (Input.GetMouseButtonDown(0) && !_isDragActive)
+            {
+                _isDragActive = true;
+                DidTap?.Invoke();
+            }
+            
+            if (!_isDragActive) return;
+            
             var isInput = Input.GetMouseButton(0);
             var mousePosition = Input.mousePosition;
             mousePosition.y = 0;
