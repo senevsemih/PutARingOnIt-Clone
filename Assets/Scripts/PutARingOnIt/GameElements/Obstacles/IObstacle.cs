@@ -1,6 +1,7 @@
-namespace Scripts.PutARingOnIt.GameElements.Obstacles
+namespace PutARingOnIt.GameElements.Obstacles
 {
     public interface IObstacle
     {
+        void DoAnimation();
     }
 }

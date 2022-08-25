@@ -1,7 +1,7 @@
 using System;
 using Scripts.PutARingOnIt.Other;
 using Dreamteck.Splines;
-using Scripts.PutARingOnIt.GameElements.Obstacles;
+using PutARingOnIt.GameElements.Obstacles;
 using Scripts.PutARingOnIt.GameElements.Stack;
 using Sirenix.OdinInspector;
 using TimerSystem;

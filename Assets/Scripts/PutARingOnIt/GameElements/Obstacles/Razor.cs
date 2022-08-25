@@ -1,8 +1,11 @@
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements.Obstacles
+namespace PutARingOnIt.GameElements.Obstacles
 {
     public class Razor : MonoBehaviour, IObstacle
     {
+        public void DoAnimation()
+        {
+        }
     }
 }
