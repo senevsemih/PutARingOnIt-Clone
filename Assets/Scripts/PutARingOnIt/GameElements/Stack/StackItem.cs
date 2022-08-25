@@ -74,6 +74,13 @@ namespace PutARingOnIt.GameElements.Stack
             _rigidbody.AddForce(direction * _config.StackThrowDuration);
         }
 
+        public void MoveForMerge(Transform target)
+        {
+            transform.DOMove(target.position, 0.1f);
+        }
+        
+        public StackCollectableType GetCollectableType() => _collectable.GetCollectableType();
+
         private void StackMovement()
         {
             var position = _transform.position;

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Rotate: {fileID: 7557087034294783962}
+  _Type: 1
   _SwingDuration: 2
   _SwingOffset: 0.5
 --- !u!65 &1199795572083551181

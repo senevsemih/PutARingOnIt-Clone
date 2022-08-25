@@ -9,6 +9,7 @@ namespace PutARingOnIt.GameElements.Stack
     {
         [SerializeField, Required] private SelfRotate _Rotate;
         [Space] 
+        [SerializeField, Required] private StackCollectableType _Type;
         [SerializeField, Required] private float _SwingDuration;
         [SerializeField, Required] private float _SwingOffset;
 
@@ -35,5 +36,7 @@ namespace PutARingOnIt.GameElements.Stack
             _graphicTransform.localPosition = Vector3.zero;
             _graphicTransform.eulerAngles = Vector3.zero;
         }
+
+        public StackCollectableType GetCollectableType() => _Type;
     }
 }
