@@ -10,11 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94253124d70146d4b563642d60de7b63, type: 3}
-  m_Name: GameConfig
+  m_Name: Config
   m_EditorClassIdentifier: 
-  LevelIndex: 1
+  LevelIndex: 0
   Score: 0
   SuccessScoreValue: 0
   ScoreAnimationDuration: 0
-  DragSpeed: 0
-  RoadLimit: 0
+  DragSpeed: 0.1
+  RoadLimit: 2
+  StaggerDuration: 1
+  StaggerCurve:
+    _Ease: 7
+    _Curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    _HasCustomCurve: 0
+  StaggerOffset: 0.1

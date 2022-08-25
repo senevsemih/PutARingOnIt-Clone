@@ -1,6 +1,7 @@
-using System;
+using System.Globalization;
+using DG.Tweening;
 using Scripts.PutARingOnIt.GameElements;
-using TimerSystem;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
@@ -8,17 +9,18 @@ namespace Scripts.PutARingOnIt.Other
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] private GameConfig _Config;
-
         [SerializeField] private GameObject _ScoreUI;
         [SerializeField] private GameObject _SuccessUI;
         [SerializeField] private GameObject _LevelPassUI;
         [SerializeField] private GameObject _StartUI;
-
+        
         [SerializeField] private TMP_Text _LevelText;
 
+        private GameConfig _config;
+        
         private void Awake()
         {
+            _config = GameConfig.Instance;
             InputController.DidTap += InputControllerOnDidTap;
             Player.DidReachEnd += PlayerOnDidReachEnd;
         }
@@ -46,7 +48,7 @@ namespace Scripts.PutARingOnIt.Other
         {
             ScoreAnimation();
 
-            _Config.IncreaseLevelIndex();
+            _config.IncreaseLevelIndex();
 
             _ScoreUI.SetActive(false);
             _ScoreUI.SetActive(false);
@@ -54,21 +56,25 @@ namespace Scripts.PutARingOnIt.Other
             _StartUI.SetActive(false);
         }
 
+        [Button]
         private void ScoreAnimation()
         {
-            var currentScore = _Config.Score;
-            var targetScore = currentScore + _Config.SuccessScoreValue;
+            var currentScore = _config.Score;
+            var targetScore = currentScore + _config.SuccessScoreValue;
+            
+            var scoreUpdate = 0f;
 
-            int scoreUpdate;
-
-            new Operation(
-                    duration: _Config.ScoreAnimationDuration,
-                    updateAction: tVal =>
-                    {
-                        scoreUpdate = (int)Mathf.Lerp(currentScore, targetScore, tVal);
-                        _LevelText.text = scoreUpdate.ToString();
-                    })
-                .Start();
+            DOTween.To(x => scoreUpdate = x, currentScore, targetScore, 1);
+            _LevelText.text = scoreUpdate.ToString(CultureInfo.InvariantCulture);
+            
+            // new Operation(
+            //         duration: _Config.ScoreAnimationDuration,
+            //         updateAction: tVal =>
+            //         {
+            //             scoreUpdate = (int)Mathf.Lerp(currentScore, targetScore, tVal);
+            //             _LevelText.text = scoreUpdate.ToString();
+            //         })
+            //     .Start();
         }
     }
 }

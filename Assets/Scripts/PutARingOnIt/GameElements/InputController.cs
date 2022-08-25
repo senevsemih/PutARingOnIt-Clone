@@ -5,9 +5,9 @@ namespace Scripts.PutARingOnIt.GameElements
 {
     public class InputController : MonoBehaviour
     {
-        public static event Action DidTap; 
+        public static event Action DidTap;
         public static event Action<Vector3> DidDrag;
-        
+
         private Vector3? _lastPosition;
         private bool _isDragActive;
 
@@ -18,13 +18,13 @@ namespace Scripts.PutARingOnIt.GameElements
                 _isDragActive = true;
                 DidTap?.Invoke();
             }
-            
+
             if (!_isDragActive) return;
-            
+
             var isInput = Input.GetMouseButton(0);
             var mousePosition = Input.mousePosition;
             mousePosition.y = 0;
-            
+
             if (isInput && _lastPosition.HasValue)
             {
                 var v = mousePosition - _lastPosition.Value;

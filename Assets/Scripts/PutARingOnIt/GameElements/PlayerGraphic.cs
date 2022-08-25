@@ -1,5 +1,4 @@
 using System;
-using Scripts.PutARingOnIt.Other;
 using UnityEngine;
 
 namespace Scripts.PutARingOnIt.GameElements
@@ -7,7 +6,7 @@ namespace Scripts.PutARingOnIt.GameElements
     public class PlayerGraphic : MonoBehaviour
     {
         [SerializeField] private Animator _Animator;
-        
+
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Shake = Animator.StringToHash("Shake");
 
