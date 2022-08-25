@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PutARingOnIt.GameElements.Player;
 using Scripts.PutARingOnIt.Other;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Scripts.PutARingOnIt.GameElements
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Player _Player;
+        [SerializeField] private PlayerController _PlayerController;
         [SerializeField] private List<LevelManager> _Levels = new();
 
         private LevelManager _currentLevel;
@@ -31,7 +32,7 @@ namespace Scripts.PutARingOnIt.GameElements
 
         private void SetSettings()
         {
-            _Player.Init(_currentLevel.SplineComputer);
+            _PlayerController.Init(_currentLevel.SplineComputer);
         }
     }
 }

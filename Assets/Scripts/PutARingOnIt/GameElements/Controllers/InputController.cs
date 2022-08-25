@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements
+namespace PutARingOnIt.GameElements.Controllers
 {
     public class InputController : MonoBehaviour
     {

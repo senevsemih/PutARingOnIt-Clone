@@ -29,7 +29,9 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
             var targetPos = target.position;
             var newItemPos = targetPos + new Vector3(0f, _stackOffset, 0f);
 
-            var newItem = newCollectable.gameObject.AddComponent<StackItem>();
+            var newItem = newCollectable.GetComponent<StackItem>();
+            if (!newItem) newItem = newCollectable.gameObject.AddComponent<StackItem>();
+
             newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), _stackOffset, this);
             newItem.name = $"Collectible - {StackCount}";
             newItem.transform.position = newItemPos;
@@ -40,6 +42,11 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
 
         public void Scatter()
         {
+            var last = _items[^1];
+            _items.Remove(last);
+            last.Throw();
+            
+            Debug.Log(StackCount);
         }
 
         public void Merge()

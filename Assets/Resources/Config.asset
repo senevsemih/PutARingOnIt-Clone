@@ -29,3 +29,9 @@ MonoBehaviour:
       m_RotationOrder: 4
     _HasCustomCurve: 0
   StaggerOffset: 0.1
+  StackThrowRangeX: {x: -5, y: 5}
+  StackThrowRangeY: {x: 1, y: 1}
+  StackThrowRangeZ: {x: 5, y: 20}
+  StackThrowJumpPower: 1
+  StackThrowDuration: 50
+  JumpEase: 1

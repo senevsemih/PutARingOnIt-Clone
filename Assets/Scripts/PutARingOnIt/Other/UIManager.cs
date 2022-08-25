@@ -1,5 +1,7 @@
 using System.Globalization;
 using DG.Tweening;
+using PutARingOnIt.GameElements.Controllers;
+using PutARingOnIt.GameElements.Player;
 using Scripts.PutARingOnIt.GameElements;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -22,7 +24,7 @@ namespace Scripts.PutARingOnIt.Other
         {
             _config = GameConfig.Instance;
             InputController.DidTap += InputControllerOnDidTap;
-            Player.DidReachEnd += PlayerOnDidReachEnd;
+            PlayerController.DidReachEnd += PlayerOnDidReachEnd;
         }
 
         private void Start()

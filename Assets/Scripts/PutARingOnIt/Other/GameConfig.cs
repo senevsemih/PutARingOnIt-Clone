@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TimerSystem.TimerHelper;
 using UnityEngine;
 
@@ -20,6 +21,13 @@ namespace Scripts.PutARingOnIt.Other
         public float StaggerDuration;
         public EaseCurve StaggerCurve;
         public float StaggerOffset;
+
+        public Vector2 StackThrowRangeX;
+        public Vector2 StackThrowRangeY;
+        public Vector2 StackThrowRangeZ;
+        public float StackThrowJumpPower;
+        public float StackThrowDuration;
+        public Ease JumpEase;
 
         public void IncreaseLevelIndex() => LevelIndex++;
 
