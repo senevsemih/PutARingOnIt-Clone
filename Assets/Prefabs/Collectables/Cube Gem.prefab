@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5134152003898140005}
   - component: {fileID: 5134152003898140011}
   - component: {fileID: 5134152003898140010}
+  - component: {fileID: 53229597176458213}
   m_Layer: 6
   m_Name: Cube Gem
   m_TagString: Untagged
@@ -46,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30424d412e744259fbdbc43cb0fc127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Graphic: {fileID: 4537624858828153139}
+  _Rotate: {fileID: 4537624858828153139}
   _SwingDuration: 2
-  _SwingOffset: 0.25
+  _SwingOffset: 0.5
 --- !u!65 &5134152003898140010
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56,12 +57,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5134152003898140004}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 45d23d740963c1b44b4782b070dfcf1a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.3, z: 0.75}
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!54 &53229597176458213
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134152003898140004}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7331145433768772692
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7331145433768772692}
   m_LocalRotation: {x: -0.00000009735359, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e70be0810e43ddbd95f87b5f50347b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _OffsetValue: {x: 0, y: 0, z: 50}
+  _RotateValue: {x: 0, y: 0, z: 50}
   _Duration: 2
 --- !u!65 &394963171660039772
 BoxCollider:

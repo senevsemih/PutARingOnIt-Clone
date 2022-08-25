@@ -1,7 +1,7 @@
 using System;
 
 // ReSharper disable  InconsistentNaming
-namespace Scripts.PutARingOnIt.GameElements.Stack
+namespace PutARingOnIt.GameElements.Stack
 {
     [Serializable]
     public class StackConfig

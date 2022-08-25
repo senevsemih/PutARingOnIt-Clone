@@ -1,5 +1,5 @@
 using PutARingOnIt.GameElements.Obstacles;
-using Scripts.PutARingOnIt.GameElements.Stack;
+using PutARingOnIt.GameElements.Stack;
 using Scripts.PutARingOnIt.Other;
 using Sirenix.OdinInspector;
 using UnityEngine;

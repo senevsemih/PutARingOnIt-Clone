@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements.Stack
+namespace PutARingOnIt.GameElements.Stack
 {
     public class StackFormation
     {
@@ -32,7 +32,7 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
             var newItem = newCollectable.GetComponent<StackItem>();
             if (!newItem) newItem = newCollectable.gameObject.AddComponent<StackItem>();
 
-            newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), _stackOffset, this);
+            newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), _stackOffset, this, newCollectable);
             newItem.name = $"Collectible - {StackCount}";
             newItem.transform.position = newItemPos;
             _items.Add(newItem);
@@ -42,11 +42,17 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
 
         public void Scatter()
         {
-            var last = _items[^1];
-            _items.Remove(last);
-            last.Throw();
-            
-            Debug.Log(StackCount);
+            if (StackCount <= 0) return;
+
+            var stackCount = StackCount;
+            var half = stackCount / 2;
+            var limit = stackCount - (half + 1);
+
+            for (var i = stackCount - 1; i >= limit; i--)
+            {
+                _items[i].Throw();
+                _items.Remove(_items[i]);
+            }
         }
 
         public void Merge()

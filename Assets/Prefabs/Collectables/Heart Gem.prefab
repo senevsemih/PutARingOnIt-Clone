@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30424d412e744259fbdbc43cb0fc127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Graphic: {fileID: 4908216014517309727}
+  _Rotate: {fileID: 4908216014517309727}
   _SwingDuration: 2
-  _SwingOffset: 0.25
+  _SwingOffset: 0.5
 --- !u!65 &1612344888262301627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &3847108168965694166
 GameObject:

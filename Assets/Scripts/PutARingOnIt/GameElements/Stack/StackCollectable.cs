@@ -1,13 +1,13 @@
 using DG.Tweening;
-using Scripts.PutARingOnIt.Other;
+using PutARingOnIt.Other;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements.Stack
+namespace PutARingOnIt.GameElements.Stack
 {
     public class StackCollectable : MonoBehaviour
     {
-        [SerializeField, Required] private SelfRotate _Graphic;
+        [SerializeField, Required] private SelfRotate _Rotate;
         [Space] 
         [SerializeField, Required] private float _SwingDuration;
         [SerializeField, Required] private float _SwingOffset;
@@ -15,11 +15,13 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
         private Transform _graphicTransform;
         private Sequence _swingSeq;
 
-        private void Awake() => _graphicTransform = _Graphic.transform;
+        private void Awake() => _graphicTransform = _Rotate.transform;
         private void Start() => DoSwing();
 
-        private void DoSwing()
+        public void DoSwing()
         {
+            _Rotate.SetActive(true);
+
             _swingSeq = DOTween.Sequence();
             _swingSeq.Append(_graphicTransform.DOLocalMoveY(_SwingOffset, _SwingDuration).SetEase(Ease.InOutSine));
             _swingSeq.SetLoops(-1, LoopType.Yoyo);
@@ -29,7 +31,7 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
         {
             _swingSeq.Kill();
 
-            Destroy(_Graphic);
+            _Rotate.SetActive(false);
             _graphicTransform.localPosition = Vector3.zero;
             _graphicTransform.eulerAngles = Vector3.zero;
         }

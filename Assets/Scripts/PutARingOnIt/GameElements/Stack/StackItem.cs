@@ -1,9 +1,10 @@
 using DG.Tweening;
 using PutARingOnIt.Other;
 using Scripts.PutARingOnIt.Other;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements.Stack
+namespace PutARingOnIt.GameElements.Stack
 {
     public class StackItem : MonoBehaviour
     {
@@ -11,13 +12,14 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
         private const float ScaleSwellingRate = 0.3f;
         private const float UPWARD_MOVEMENT_FOLLOW_SPEED_MULTIPLIER = 4;
 
-        private Transform _target;
-        private float _speed;
-        private float _offset;
-        private StackFormation _stack;
+        [ShowInInspector, ReadOnly] private Transform _target;
+        [ShowInInspector, ReadOnly] private float _speed;
+        [ShowInInspector, ReadOnly] private float _offset;
+        [ShowInInspector, ReadOnly] private StackFormation _stack;
 
         private Rigidbody _rigidbody;
         private Transform _transform;
+        private StackCollectable _collectable;
         private GameConfig _config;
 
         private void Awake()
@@ -27,14 +29,15 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void SetStackSettings(Transform target, float speed, float offset, StackFormation stack)
+        public void SetStackSettings(Transform target, float speed, float offset, StackFormation stack, StackCollectable collectable)
         {
             _rigidbody.isKinematic = true;
-            
+
             _target = target;
             _speed = speed;
             _offset = offset;
             _stack = stack;
+            _collectable = collectable;
 
             DoScaleAnimation(true);
         }
@@ -59,12 +62,14 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
         {
             _target = null;
 
+            _collectable.DoSwing();
+
             var randomX = _config.StackThrowRangeX.GetRandomValueAsRange();
             var randomY = _config.StackThrowRangeY.GetRandomValueAsRange();
             var randomZ = _config.StackThrowRangeZ.GetRandomValueAsRange();
 
             var direction = new Vector3(randomX, randomY, randomZ);
-            
+
             _rigidbody.isKinematic = false;
             _rigidbody.AddForce(direction * _config.StackThrowDuration);
         }
