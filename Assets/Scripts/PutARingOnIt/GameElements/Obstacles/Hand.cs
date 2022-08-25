@@ -1,12 +1,13 @@
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PutARingOnIt.GameElements.Obstacles
 {
     public class Hand : MonoBehaviour, IObstacle
     {
-        [SerializeField] private float _OffsetValue;
-        [SerializeField] private float _Duration;
+        [SerializeField, Required] private float _OffsetValue;
+        [SerializeField, Required] private float _Duration;
 
         private void Start() => DoAnimation();
 

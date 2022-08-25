@@ -9,10 +9,10 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
         private readonly float _stackMaxSpeed;
         private readonly float _stackSpeedDecreaseRate;
         private readonly Transform _stackStartPosition;
-        private readonly  List<StackItem> _items = new();
-        
+        private readonly List<StackItem> _items = new();
+
         private int StackCount => _items.Count;
-        
+
         public StackFormation(StackConfig config, Transform stackStartPosition)
         {
             _stackOffset = config.StackOffset;
@@ -20,15 +20,15 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
             _stackSpeedDecreaseRate = config.StackSpeedDecreaseRate;
             _stackStartPosition = stackStartPosition;
         }
-        
+
         public void Increase(StackCollectable newCollectable)
         {
-            newCollectable.OperationCancel();
-            
+            newCollectable.ResetTransform();
+
             var target = GetTargetTransformForItemIndex(StackCount);
             var targetPos = target.position;
             var newItemPos = targetPos + new Vector3(0f, _stackOffset, 0f);
-            
+
             var newItem = newCollectable.gameObject.AddComponent<StackItem>();
             newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), _stackOffset, this);
             newItem.name = $"Collectible - {StackCount}";
@@ -40,29 +40,29 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
 
         public void Scatter()
         {
-            
         }
 
         public void Merge()
         {
-            
         }
 
         private void IncreaseEffect()
         {
             for (var i = StackCount - 1; i >= 0; i--)
             {
-                _items[i].ScaleAnim();
+                _items[i].DoScaleAnimation(false, StackCount - 1 - i);
             }
         }
-        
+
         private float GetSpeedByItemIndex(int index)
         {
             var speed = _stackMaxSpeed - (index - 1) * _stackSpeedDecreaseRate;
-            if (speed <= 0)  speed = 1;
-            
+            if (speed <= 0) speed = 1;
+
             return speed;
         }
-        private Transform GetTargetTransformForItemIndex(int i) => i == 0 ? _stackStartPosition : _items[i - 1].transform;
+
+        private Transform GetTargetTransformForItemIndex(int i) =>
+            i == 0 ? _stackStartPosition : _items[i - 1].transform;
     }
 }

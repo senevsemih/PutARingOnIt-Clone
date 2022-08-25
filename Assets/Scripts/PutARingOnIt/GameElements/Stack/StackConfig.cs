@@ -1,5 +1,6 @@
 using System;
 
+// ReSharper disable  InconsistentNaming
 namespace Scripts.PutARingOnIt.GameElements.Stack
 {
     [Serializable]

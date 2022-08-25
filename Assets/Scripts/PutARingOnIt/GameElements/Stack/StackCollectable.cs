@@ -1,7 +1,6 @@
+using DG.Tweening;
 using Scripts.PutARingOnIt.Other;
 using Sirenix.OdinInspector;
-using TimerSystem;
-using TimerSystem.TimerHelper;
 using UnityEngine;
 
 namespace Scripts.PutARingOnIt.GameElements.Stack
@@ -10,33 +9,25 @@ namespace Scripts.PutARingOnIt.GameElements.Stack
     {
         [SerializeField, Required] private SelfRotate _Graphic;
         [Space] 
-        [SerializeField, Required] private float _Duration;
-        [SerializeField, Required] private EaseCurve _Curve;
+        [SerializeField, Required] private float _SwingDuration;
+        [SerializeField, Required] private float _SwingOffset;
 
         private Transform _graphicTransform;
-        private const float Offset = -0.25f;
-        private OperationTreeDescription _repeatingOperation;
+        private Sequence _swingSeq;
 
         private void Awake() => _graphicTransform = _Graphic.transform;
+        private void Start() => DoSwing();
 
-        private void Start()
+        private void DoSwing()
         {
-            var graphicLocalPosition = _graphicTransform.localPosition;
-            var targetPosition = graphicLocalPosition + new Vector3(0f, Offset, 0f);
-
-            _repeatingOperation = new Operation(
-                    duration: _Duration,
-                    ease: _Curve,
-                    updateAction: tVal =>
-                    {
-                        _graphicTransform.localPosition = Vector3.Lerp(graphicLocalPosition, targetPosition, tVal);
-                    })
-                .Start().Repeat();
+            _swingSeq = DOTween.Sequence();
+            _swingSeq.Append(_graphicTransform.DOLocalMoveY(_SwingOffset, _SwingDuration).SetEase(Ease.InOutSine));
+            _swingSeq.SetLoops(-1, LoopType.Yoyo);
         }
 
-        public void OperationCancel()
+        public void ResetTransform()
         {
-            _repeatingOperation.Cancel();
+            _swingSeq.Kill();
 
             Destroy(_Graphic);
             _graphicTransform.localPosition = Vector3.zero;
