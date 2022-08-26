@@ -8,6 +8,7 @@ namespace PutARingOnIt.GameElements.Stack
     public class StackCollectable : MonoBehaviour
     {
         [SerializeField, Required] private SelfRotate _Rotate;
+        [SerializeField, Required] private Transform _TopTransform;
         [Space] 
         [SerializeField, Required] private StackCollectableType _Type;
         [SerializeField, Required] private float _SwingDuration;
@@ -38,5 +39,6 @@ namespace PutARingOnIt.GameElements.Stack
         }
 
         public StackCollectableType GetCollectableType() => _Type;
+        public Transform TopTransform() => _TopTransform;
     }
 }

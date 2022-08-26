@@ -4,8 +4,6 @@ using Scripts.PutARingOnIt.Other;
 using Dreamteck.Splines;
 using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Obstacles;
-using Sirenix.OdinInspector;
-using TimerSystem;
 using UnityEngine;
 
 namespace PutARingOnIt.GameElements.Player

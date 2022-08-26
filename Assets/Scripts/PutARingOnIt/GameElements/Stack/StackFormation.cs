@@ -5,17 +5,16 @@ namespace PutARingOnIt.GameElements.Stack
 {
     public class StackFormation
     {
-        private readonly float _stackOffset;
         private readonly float _stackMaxSpeed;
         private readonly float _stackSpeedDecreaseRate;
         private readonly Transform _stackStartPosition;
         private readonly List<StackItem> _items = new();
 
         private int StackCount => _items.Count;
+        private int _mergeIndex;
 
         public StackFormation(StackConfig config, Transform stackStartPosition)
         {
-            _stackOffset = config.StackOffset;
             _stackMaxSpeed = config.StackMaxSpeed;
             _stackSpeedDecreaseRate = config.StackSpeedDecreaseRate;
             _stackStartPosition = stackStartPosition;
@@ -27,14 +26,13 @@ namespace PutARingOnIt.GameElements.Stack
 
             var target = GetTargetTransformForItemIndex(StackCount);
             var targetPos = target.position;
-            var newItemPos = targetPos + new Vector3(0f, _stackOffset, 0f);
 
             var newItem = newCollectable.GetComponent<StackItem>();
             if (!newItem) newItem = newCollectable.gameObject.AddComponent<StackItem>();
 
-            newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), _stackOffset, this, newCollectable);
+            newItem.SetStackSettings(target, GetSpeedByItemIndex(StackCount), newCollectable);
             newItem.name = $"Collectible - {StackCount}";
-            newItem.transform.position = newItemPos;
+            newItem.transform.position = targetPos;
             _items.Add(newItem);
 
             IncreaseEffect();
@@ -55,8 +53,59 @@ namespace PutARingOnIt.GameElements.Stack
             }
         }
 
-        public void Merge()
+        public void Merge(int index, bool isDoor = false)
         {
+            while (true)
+            {
+                if (isDoor) _mergeIndex = index;
+
+                if (StackCount <= 1) return;
+
+                var item = _items[_mergeIndex];
+                if (_mergeIndex + 1 > StackCount - 1) return;
+                var aboveItem = _items[_mergeIndex + 1];
+
+                if (item.GetCollectableType() == aboveItem.GetCollectableType())
+                {
+                    item.DoScaleAnimation(false, 0, true);
+                    aboveItem.MoveForMerge(item.transform, StackRefresh);
+                }
+                else
+                {
+                    _mergeIndex++;
+                    index = _mergeIndex;
+                    isDoor = false;
+                    continue;
+                }
+
+                for (var i = 0; i < StackCount; i++)
+                {
+                    _items[i].UpdateSpeed(GetSpeedByItemIndex(i));
+                }
+
+                break;
+            }
+        }
+
+        private void StackRefresh()
+        {
+            var mergeItem = _items[_mergeIndex + 1];
+
+            if (_mergeIndex + 2 < StackCount)
+            {
+                var item = _items[_mergeIndex];
+                var aboveMergeItem = _items[_mergeIndex + 2];
+
+                aboveMergeItem.UpdateTarget(item.TopTransform());
+                _items.Remove(mergeItem);
+            }
+            else
+            {
+                _items.Remove(mergeItem);
+            }
+
+            mergeItem.gameObject.SetActive(false);
+            Merge(_mergeIndex);
         }
 
         private void IncreaseEffect()
@@ -76,6 +125,6 @@ namespace PutARingOnIt.GameElements.Stack
         }
 
         private Transform GetTargetTransformForItemIndex(int i) =>
-            i == 0 ? _stackStartPosition : _items[i - 1].transform;
+            i == 0 ? _stackStartPosition : _items[i - 1].TopTransform();
     }
 }

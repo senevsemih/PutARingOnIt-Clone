@@ -10,7 +10,6 @@ namespace PutARingOnIt.GameElements.Player
     {
         [SerializeField, Required] private StackConfig _StackConfig = new()
         {
-            StackOffset = 1,
             StackMaxSpeed = 20,
             StackSpeedDecreaseRate = 1
         };
@@ -30,6 +29,15 @@ namespace PutARingOnIt.GameElements.Player
 
             var collectable = other.gameObject.GetComponent<StackCollectable>();
             if (collectable) _stackFormation.Increase(collectable);
+
+            var door = other.gameObject.GetComponent<Door>();
+            if (door) _stackFormation.Merge(0, true);
+        }
+
+        [Button]
+        private void Test()
+        {
+            _stackFormation.Merge(0, true);
         }
     }
 }

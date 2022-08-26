@@ -1817,6 +1817,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 944759412402921158, guid: d1a9e20cc4c3661409b6a44630e84f47,
+        type: 3}
+      propertyPath: _followSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 944759412402921159, guid: d1a9e20cc4c3661409b6a44630e84f47,
         type: 3}
       propertyPath: _StackConfig.StackOffset

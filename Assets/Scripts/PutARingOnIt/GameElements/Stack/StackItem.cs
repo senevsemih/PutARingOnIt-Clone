@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using PutARingOnIt.Other;
 using Scripts.PutARingOnIt.Other;
@@ -10,13 +11,13 @@ namespace PutARingOnIt.GameElements.Stack
     {
         private const float ScaleDuration = 0.1f;
         private const float ScaleSwellingRate = 0.3f;
-        private const float UPWARD_MOVEMENT_FOLLOW_SPEED_MULTIPLIER = 4;
+        private const float ScaleUpRate = 0.1f;
 
         [ShowInInspector, ReadOnly] private Transform _target;
-        [ShowInInspector, ReadOnly] private float _speed;
-        [ShowInInspector, ReadOnly] private float _offset;
-        [ShowInInspector, ReadOnly] private StackFormation _stack;
+        private float _speed;
 
+        private Sequence _scaleAnim;
+        private Vector3 _scale;
         private Rigidbody _rigidbody;
         private Transform _transform;
         private StackCollectable _collectable;
@@ -29,39 +30,44 @@ namespace PutARingOnIt.GameElements.Stack
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void SetStackSettings(Transform target, float speed, float offset, StackFormation stack, StackCollectable collectable)
-        {
-            _rigidbody.isKinematic = true;
-
-            _target = target;
-            _speed = speed;
-            _offset = offset;
-            _stack = stack;
-            _collectable = collectable;
-
-            DoScaleAnimation(true);
-        }
-
         private void Update()
         {
             if (_target) StackMovement();
         }
 
-        public void DoScaleAnimation(bool isInitial, float delay = 0)
+        public void SetStackSettings(Transform target, float speed, StackCollectable collectable)
+        {
+            _rigidbody.isKinematic = true;
+            _scale = transform.localScale;
+
+            _target = target;
+            _speed = speed;
+            _collectable = collectable;
+
+            DoScaleAnimation(true);
+        }
+
+        public void UpdateTarget(Transform target) => _target = target;
+        public void UpdateSpeed(float speed) => _speed = speed;
+
+        public void DoScaleAnimation(bool isInitial, float delay = 0, bool isIncrease = false)
         {
             if (isInitial) _transform.localScale = Vector3.zero;
+            if (isIncrease)
+            {
+                _scale += new Vector3(ScaleUpRate, ScaleUpRate, ScaleUpRate);
+            }
 
-            var targetScale = Vector3.one + new Vector3(ScaleSwellingRate, 0f, ScaleSwellingRate);
-            var seq = DOTween.Sequence();
-            seq.SetDelay(delay * ScaleDuration);
-            seq.Append(_transform.DOScale(targetScale, ScaleDuration));
-            seq.Append(_transform.DOScale(Vector3.one, ScaleDuration));
+            var targetScale = _scale + new Vector3(ScaleSwellingRate, 0f, ScaleSwellingRate);
+            _scaleAnim = DOTween.Sequence();
+            _scaleAnim.SetDelay(delay * ScaleDuration);
+            _scaleAnim.Append(_transform.DOScale(targetScale, ScaleDuration));
+            _scaleAnim.Append(_transform.DOScale(_scale, ScaleDuration));
         }
 
         public void Throw()
         {
             _target = null;
-
             _collectable.DoSwing();
 
             var randomX = _config.StackThrowRangeX.GetRandomValueAsRange();
@@ -74,33 +80,28 @@ namespace PutARingOnIt.GameElements.Stack
             _rigidbody.AddForce(direction * _config.StackThrowDuration);
         }
 
-        public void MoveForMerge(Transform target)
+        public void MoveForMerge(Transform target, Action stackRefresh)
         {
-            transform.DOMove(target.position, 0.1f);
+            _target = null;
+            _scaleAnim.Kill();
+            _transform.DOMove(target.position, 0.01f).OnComplete(() => stackRefresh?.Invoke());
         }
-        
+
         public StackCollectableType GetCollectableType() => _collectable.GetCollectableType();
+        public Transform TopTransform() => _collectable.TopTransform();
 
         private void StackMovement()
         {
-            var position = _transform.position;
-            // var rotation = _transform.eulerAngles;
+            var rotation = _transform.rotation;
 
             var targetTransform = _target.transform;
             var targetPosition = targetTransform.position;
-            // var targetRotation = targetTransform.eulerAngles;
+            var targetRotation = targetTransform.rotation;
 
-            var positionTargetZ = targetPosition.z;
+            rotation = Quaternion.Lerp(rotation, targetRotation, _speed * Time.deltaTime);
 
-            position.x = Mathf.Lerp(position.x, targetPosition.x, _speed * Time.deltaTime);
-            position.y = targetPosition.y + _offset;
-            position.z = Mathf.Lerp(position.z, positionTargetZ,
-                _speed * UPWARD_MOVEMENT_FOLLOW_SPEED_MULTIPLIER * Time.deltaTime);
-
-            // rotation.z = Mathf.Lerp(rotation.z, targetRotation.z, _speed * Time.deltaTime);
-
-            _transform.position = position;
-            // _transform.eulerAngles = rotation;
+            _transform.position = targetPosition;
+            _transform.rotation = rotation;
         }
     }
 }
