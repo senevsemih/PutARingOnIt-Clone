@@ -1,9 +1,9 @@
 using System;
 using DG.Tweening;
-using Scripts.PutARingOnIt.Other;
 using Dreamteck.Splines;
 using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Obstacles;
+using PutARingOnIt.Other;
 using UnityEngine;
 
 namespace PutARingOnIt.GameElements.Player
@@ -13,8 +13,7 @@ namespace PutARingOnIt.GameElements.Player
         public static event Action DidReachEnd;
 
         [SerializeField] private SplineFollower _SplineFollower;
-        [Space] 
-        [SerializeField] private PlayerGraphic _Graphic;
+        [Space] [SerializeField] private PlayerGraphic _Graphic;
         [SerializeField] private PhysicsListener _PhysicsListener;
 
         private GameConfig _config;
@@ -57,10 +56,17 @@ namespace PutARingOnIt.GameElements.Player
             _SplineFollower.onEndReached -= SplineFollowerOnEndReached;
             _SplineFollower.follow = false;
 
-            // biraz yukarı yükselecek.
+            var currentPosition = transform.position;
+            currentPosition.x = 0;
+            var targetPosition = currentPosition + _config.LevelEndOffset;
 
-            _Graphic.StateChangeTo(HandAnimState.Shake);
-            DidReachEnd?.Invoke();
+            var seq = DOTween.Sequence();
+            seq.Append(transform.DOMove(targetPosition, _config.LevelEndMoveOffsetDuration))
+                .OnComplete(() =>
+                {
+                    _Graphic.StateChangeTo(HandAnimState.Shake);
+                    DidReachEnd?.Invoke();
+                });
         }
 
         private void Stagger()

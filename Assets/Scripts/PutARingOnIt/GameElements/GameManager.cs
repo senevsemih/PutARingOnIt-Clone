@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using PutARingOnIt.GameElements.Player;
-using Scripts.PutARingOnIt.Other;
+using PutARingOnIt.Other;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.GameElements
+namespace PutARingOnIt.GameElements
 {
     public class GameManager : MonoBehaviour
     {

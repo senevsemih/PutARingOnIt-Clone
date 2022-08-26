@@ -1,7 +1,6 @@
 using System;
 using DG.Tweening;
 using PutARingOnIt.Other;
-using Scripts.PutARingOnIt.Other;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -78,7 +77,7 @@ namespace PutARingOnIt.GameElements.Stack
             var direction = new Vector3(randomX, randomY, randomZ);
 
             _rigidbody.isKinematic = false;
-            _rigidbody.AddForce(direction * _config.StackThrowDuration);
+            _rigidbody.AddForce(direction * _config.StackThrowForce);
         }
 
         public void MoveForMerge(Transform target, Action stackRefresh)

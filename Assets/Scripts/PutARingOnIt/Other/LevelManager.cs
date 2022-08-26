@@ -1,7 +1,7 @@
 using Dreamteck.Splines;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.Other
+namespace PutARingOnIt.Other
 {
     public class LevelManager : MonoBehaviour
     {

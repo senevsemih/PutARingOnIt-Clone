@@ -1,9 +1,8 @@
-using DG.Tweening;
-using TimerSystem.TimerHelper;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
-namespace Scripts.PutARingOnIt.Other
+namespace PutARingOnIt.Other
 {
     [CreateAssetMenu(fileName = "GameConfig", menuName = "GameConfig", order = 0)]
     public class GameConfig : ScriptableObject
@@ -15,26 +14,22 @@ namespace Scripts.PutARingOnIt.Other
         public int SuccessScoreValue;
         public float ScoreAnimationDuration;
 
-        public float DragSpeed;
-        public float RoadLimit;
+        [FoldoutGroup("Game")] public float DragSpeed;
+        [FoldoutGroup("Game")] public float RoadLimit;
 
-        public float StaggerDuration;
-        public EaseCurve StaggerCurve;
-        public float StaggerOffset;
+        [FoldoutGroup("Player")] public float StaggerDuration;
+        [FoldoutGroup("Player")] public float StaggerOffset;
+        [FoldoutGroup("Player")] public Vector3 LevelEndOffset;
+        [FoldoutGroup("Player")] public float LevelEndMoveOffsetDuration;
 
-        public Vector2 StackThrowRangeX;
-        public Vector2 StackThrowRangeY;
-        public Vector2 StackThrowRangeZ;
-        public float StackThrowJumpPower;
-        public float StackThrowDuration;
-        public Ease JumpEase;
+        [FoldoutGroup("Stack")] public Vector2 StackThrowRangeX;
+        [FoldoutGroup("Stack")] public Vector2 StackThrowRangeY;
+        [FoldoutGroup("Stack")] public Vector2 StackThrowRangeZ;
+        [FoldoutGroup("Stack")] public float StackThrowForce;
 
         public void IncreaseLevelIndex() => LevelIndex++;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        public static void OnLoad()
-        {
-            Instance = Resources.Load<GameConfig>("Config");
-        }
+        public static void OnLoad() => Instance = Resources.Load<GameConfig>("Config");
     }
 }

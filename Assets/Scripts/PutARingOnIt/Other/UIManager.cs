@@ -2,12 +2,11 @@ using System.Globalization;
 using DG.Tweening;
 using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Player;
-using Scripts.PutARingOnIt.GameElements;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace Scripts.PutARingOnIt.Other
+namespace PutARingOnIt.Other
 {
     public class UIManager : MonoBehaviour
     {

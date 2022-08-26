@@ -19,19 +19,10 @@ MonoBehaviour:
   DragSpeed: 0.1
   RoadLimit: 3
   StaggerDuration: 1
-  StaggerCurve:
-    _Ease: 7
-    _Curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    _HasCustomCurve: 0
   StaggerOffset: 0.05
+  LevelEndOffset: {x: 0, y: 2, z: 1}
+  LevelEndMoveOffsetDuration: 1
   StackThrowRangeX: {x: -4, y: 4}
   StackThrowRangeY: {x: 1, y: 1}
   StackThrowRangeZ: {x: 5, y: 10}
-  StackThrowJumpPower: 1
-  StackThrowDuration: 50
-  JumpEase: 1
+  StackThrowForce: 50

@@ -6,6 +6,7 @@ namespace PutARingOnIt.Other
     public class SelfRotate : MonoBehaviour
     {
         [SerializeField, Required] private Vector3 _Rotation = Vector3.up;
+
         private bool _isActive = true;
         public void SetActive(bool value) => _isActive = value;
 
