@@ -1,5 +1,7 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace PutARingOnIt.GameElements.Controllers
 {
@@ -8,11 +10,21 @@ namespace PutARingOnIt.GameElements.Controllers
         public static event Action DidTap;
         public static event Action<Vector3> DidDrag;
 
+#if UNITY_EDITOR
+        private static bool IsInput => Input.GetMouseButton(0);
+        private static Vector3 InputPos => Input.mousePosition;
+#else
+        private static bool IsInput => Input.touchCount > 0;
+        private static Vector3 InputPos => Input.touches[0].position;
+#endif
+
         private Vector3? _lastPosition;
         private bool _isDragActive;
 
         private void Update()
         {
+            if (EventSystem.current && EventSystem.current.currentSelectedGameObject) return;
+
             if (Input.GetMouseButtonDown(0) && !_isDragActive)
             {
                 _isDragActive = true;
@@ -21,13 +33,13 @@ namespace PutARingOnIt.GameElements.Controllers
 
             if (!_isDragActive) return;
 
-            var isInput = Input.GetMouseButton(0);
-            var mousePosition = Input.mousePosition;
-            mousePosition.y = 0;
+            var isInput = IsInput;
+            var inputPos = InputPos;
+            inputPos.y = 0;
 
             if (isInput && _lastPosition.HasValue)
             {
-                var v = mousePosition - _lastPosition.Value;
+                var v = inputPos - _lastPosition.Value;
                 var direction = v.normalized;
                 DidDrag?.Invoke(direction);
             }
@@ -36,7 +48,7 @@ namespace PutARingOnIt.GameElements.Controllers
                 _lastPosition = null;
             }
 
-            if (isInput) _lastPosition = mousePosition;
+            if (isInput) _lastPosition = inputPos;
         }
     }
 }

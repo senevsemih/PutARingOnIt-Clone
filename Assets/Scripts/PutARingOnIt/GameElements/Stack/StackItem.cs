@@ -55,6 +55,7 @@ namespace PutARingOnIt.GameElements.Stack
             if (isInitial) _transform.localScale = Vector3.zero;
             if (isIncrease)
             {
+                _scaleAnim.Kill();
                 _scale += new Vector3(ScaleUpRate, ScaleUpRate, ScaleUpRate);
             }
 
@@ -84,7 +85,7 @@ namespace PutARingOnIt.GameElements.Stack
         {
             _target = null;
             _scaleAnim.Kill();
-            _transform.DOMove(target.position, 0.01f).OnComplete(() => stackRefresh?.Invoke());
+            _transform.DOMove(target.position, 0.05f).OnComplete(() => stackRefresh?.Invoke());
         }
 
         public StackCollectableType GetCollectableType() => _collectable.GetCollectableType();

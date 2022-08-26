@@ -17,7 +17,7 @@ MonoBehaviour:
   SuccessScoreValue: 0
   ScoreAnimationDuration: 0
   DragSpeed: 0.1
-  RoadLimit: 2
+  RoadLimit: 3
   StaggerDuration: 1
   StaggerCurve:
     _Ease: 7
@@ -28,7 +28,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     _HasCustomCurve: 0
-  StaggerOffset: 0.1
+  StaggerOffset: 0.05
   StackThrowRangeX: {x: -4, y: 4}
   StackThrowRangeY: {x: 1, y: 1}
   StackThrowRangeZ: {x: 5, y: 10}

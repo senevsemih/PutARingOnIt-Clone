@@ -1,3 +1,4 @@
+using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Obstacles;
 using PutARingOnIt.GameElements.Stack;
 using Scripts.PutARingOnIt.Other;
@@ -25,7 +26,11 @@ namespace PutARingOnIt.GameElements.Player
         private void PhysicsListenerOnTriggerEnter(Collider other)
         {
             var obstacle = other.gameObject.GetComponent<IObstacle>();
-            if (obstacle != null) _stackFormation.Scatter();
+            if (obstacle != null)
+            {
+                CameraController.Shake();
+                _stackFormation.Scatter();
+            }
 
             var collectable = other.gameObject.GetComponent<StackCollectable>();
             if (collectable) _stackFormation.Increase(collectable);
@@ -35,7 +40,7 @@ namespace PutARingOnIt.GameElements.Player
         }
 
         [Button]
-        private void Test()
+        public void Test()
         {
             _stackFormation.Merge(0, true);
         }

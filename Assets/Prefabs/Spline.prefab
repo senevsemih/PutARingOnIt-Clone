@@ -638,11 +638,11 @@ MonoBehaviour:
     _minRotation: {x: 0, y: 0, z: 0}
     _maxRotation: {x: 0, y: 0, z: 0}
     _randomOffset: 0
-    _minOffset: {x: 0, y: 0}
+    _minOffset: {x: 0, y: -0.5}
     _maxOffset: {x: 0, y: 0}
     _randomScale: 0
     _uniformRandomScale: 0
-    _minScale: {x: 6, y: 1, z: 1}
+    _minScale: {x: 10, y: 1, z: 1}
     _maxScale: {x: 1, y: 1, z: 1}
     _overrideMaterialID: 0
     _targetMaterialID: 0
