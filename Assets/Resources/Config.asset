@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelIndex: 0
   Score: 0
-  SuccessScoreValue: 0
-  ScoreAnimationDuration: 0
+  SuccessScoreValue: 50
+  ScoreAnimationDuration: 1
   DragSpeed: 0.1
   RoadLimit: 3
   StaggerDuration: 1

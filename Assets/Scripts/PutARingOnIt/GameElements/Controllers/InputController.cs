@@ -1,4 +1,5 @@
 using System;
+using PutARingOnIt.GameElements.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,12 +20,28 @@ namespace PutARingOnIt.GameElements.Controllers
 #endif
 
         private Vector3? _lastPosition;
-        private bool _isDragActive;
+        [ShowInInspector, ReadOnly] private bool _isDragActive;
+        [ShowInInspector, ReadOnly] private bool _isInputActive;
+
+        private void Awake()
+        {
+            GameManager.DidLevelLoad += GameManagerOnDidLevelLoad;
+            PlayerController.DidReachEnd += PlayerControllerOnDidReachEnd;
+        }
+
+        private void GameManagerOnDidLevelLoad() => _isInputActive = true;
+
+        private void PlayerControllerOnDidReachEnd()
+        {
+            _isInputActive = false;
+            _isDragActive = false;
+        }
 
         private void Update()
         {
             if (EventSystem.current && EventSystem.current.currentSelectedGameObject) return;
-
+            
+            if (!_isInputActive) return;
             if (Input.GetMouseButtonDown(0) && !_isDragActive)
             {
                 _isDragActive = true;

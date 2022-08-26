@@ -29,7 +29,10 @@ namespace PutARingOnIt.GameElements.Player
 
         public void Init(SplineComputer spline)
         {
+            _Graphic.StateChangeTo(HandAnimState.Idle);
+
             _SplineFollower.spline = spline;
+            _SplineFollower.SetPercent(0);
             _SplineFollower.onEndReached += SplineFollowerOnEndReached;
         }
 

@@ -20,8 +20,14 @@ namespace PutARingOnIt.GameElements.Player
 
         private StackFormation _stackFormation;
 
-        private void Awake() => _PhysicsListener.TriggerEnter += PhysicsListenerOnTriggerEnter;
-        private void Start() => _stackFormation = new StackFormation(_StackConfig, _StackStartPosition);
+        private void Awake()
+        {
+            _PhysicsListener.TriggerEnter += PhysicsListenerOnTriggerEnter;
+            GameManager.DidLevelLoad += GameManagerOnDidLevelLoad;
+        }
+
+        private void GameManagerOnDidLevelLoad() =>
+            _stackFormation = new StackFormation(_StackConfig, _StackStartPosition);
 
         private void PhysicsListenerOnTriggerEnter(Collider other)
         {
@@ -37,12 +43,6 @@ namespace PutARingOnIt.GameElements.Player
 
             var door = other.gameObject.GetComponent<Door>();
             if (door) _stackFormation.Merge(0, true);
-        }
-
-        [Button]
-        public void Test()
-        {
-            _stackFormation.Merge(0, true);
         }
     }
 }
