@@ -10,6 +10,7 @@ namespace PutARingOnIt.GameElements.Controllers
     {
         public static event Action DidTap;
         public static event Action<Vector3> DidDrag;
+        public static event Action DidDragEnd;
 
 #if UNITY_EDITOR
         private static bool IsInput => Input.GetMouseButton(0);
@@ -25,7 +26,7 @@ namespace PutARingOnIt.GameElements.Controllers
 
         private void Awake()
         {
-            GameManager.DidLevelLoad += GameManagerOnDidLevelLoad;
+            GameController.DidLevelLoad += GameManagerOnDidLevelLoad;
             PlayerController.DidReachEnd += PlayerControllerOnDidReachEnd;
         }
 
@@ -40,7 +41,7 @@ namespace PutARingOnIt.GameElements.Controllers
         private void Update()
         {
             if (EventSystem.current && EventSystem.current.currentSelectedGameObject) return;
-            
+
             if (!_isInputActive) return;
             if (Input.GetMouseButtonDown(0) && !_isDragActive)
             {
@@ -63,6 +64,7 @@ namespace PutARingOnIt.GameElements.Controllers
             else
             {
                 _lastPosition = null;
+                DidDragEnd?.Invoke();
             }
 
             if (isInput) _lastPosition = inputPos;

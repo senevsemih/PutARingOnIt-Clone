@@ -1,14 +1,13 @@
 using System;
 using DG.Tweening;
-using PutARingOnIt.GameElements;
-using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Player;
+using PutARingOnIt.Other;
 using TMPro;
 using UnityEngine;
 
-namespace PutARingOnIt.Other
+namespace PutARingOnIt.GameElements.Controllers
 {
-    public class UIManager : MonoBehaviour
+    public class UIController : MonoBehaviour
     {
         public static event Action DidLevelPass;
 
@@ -28,7 +27,7 @@ namespace PutARingOnIt.Other
 
             InputController.DidTap += InputControllerOnDidTap;
             PlayerController.DidReachEnd += PlayerOnDidReachEnd;
-            GameManager.DidLevelLoad += GameManagerOnDidLevelLoad;
+            GameController.DidLevelLoad += GameManagerOnDidLevelLoad;
         }
 
         private void GameManagerOnDidLevelLoad()
@@ -39,7 +38,7 @@ namespace PutARingOnIt.Other
             _ScoreText.text = $"{_config.Score}";
             _LevelText.text = $"Level {_config.LevelIndex + 1}";
         }
-        
+
         private void InputControllerOnDidTap()
         {
             _ScoreUI.SetActive(false);

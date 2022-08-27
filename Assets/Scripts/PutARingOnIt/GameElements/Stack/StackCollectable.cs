@@ -9,8 +9,7 @@ namespace PutARingOnIt.GameElements.Stack
     {
         [SerializeField, Required] private SelfRotate _Rotate;
         [SerializeField, Required] private Transform _TopTransform;
-        [Space] 
-        [SerializeField, Required] private StackCollectableType _Type;
+        [Space] [SerializeField, Required] private StackCollectableType _Type;
         [SerializeField, Required] private float _SwingDuration;
         [SerializeField, Required] private float _SwingOffset;
 

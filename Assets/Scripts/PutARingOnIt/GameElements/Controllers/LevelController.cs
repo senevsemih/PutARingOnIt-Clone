@@ -1,9 +1,9 @@
 using Dreamteck.Splines;
 using UnityEngine;
 
-namespace PutARingOnIt.Other
+namespace PutARingOnIt.GameElements.Controllers
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelController : MonoBehaviour
     {
         [SerializeField] private SplineComputer _SplineComputer;
         public SplineComputer SplineComputer => _SplineComputer;

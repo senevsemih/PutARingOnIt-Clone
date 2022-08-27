@@ -17,8 +17,12 @@ namespace PutARingOnIt.Other
         [FoldoutGroup("Game")] public float DragSpeed;
         [FoldoutGroup("Game")] public float RoadLimit;
 
+        [FoldoutGroup("Player")] public float StackPivotRotationSpeed;
+        [FoldoutGroup("Player")] public float StackRotateAngleLimit;
+        [Space]
         [FoldoutGroup("Player")] public float StaggerDuration;
         [FoldoutGroup("Player")] public float StaggerOffset;
+        [Space]
         [FoldoutGroup("Player")] public Vector3 LevelEndOffset;
         [FoldoutGroup("Player")] public float LevelEndMoveOffsetDuration;
 

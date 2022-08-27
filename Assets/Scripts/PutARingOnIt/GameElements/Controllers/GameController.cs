@@ -5,24 +5,24 @@ using PutARingOnIt.GameElements.Player;
 using PutARingOnIt.Other;
 using UnityEngine;
 
-namespace PutARingOnIt.GameElements
+namespace PutARingOnIt.GameElements.Controllers
 {
-    public class GameManager : MonoBehaviour
+    public class GameController : MonoBehaviour
     {
         public static event Action DidLevelLoad;
 
         [SerializeField] private PlayerController _PlayerController;
-        [SerializeField] private List<LevelManager> _Levels = new();
+        [SerializeField] private List<LevelController> _Levels = new();
 
-        private LevelManager _currentLevel;
+        private LevelController _currentLevel;
         private GameConfig _config;
 
         private void Awake()
         {
             _config = GameConfig.Instance;
-            UIManager.DidLevelPass += OnDidLevelPass;
+            UIController.DidLevelPass += OnDidLevelPass;
         }
-        
+
         private void Start() => LevelLoader();
 
         private void OnDidLevelPass() => LevelLoader();
@@ -31,7 +31,7 @@ namespace PutARingOnIt.GameElements
         {
             var currentLevelIndex = _config.LevelIndex;
             int loadIndex;
-            
+
             if (currentLevelIndex <= _Levels.Count - 1)
             {
                 loadIndex = currentLevelIndex;
@@ -41,15 +41,16 @@ namespace PutARingOnIt.GameElements
                 _config.LevelIndex = 0;
                 loadIndex = _config.LevelIndex;
             }
-            
+
             if (_currentLevel)
             {
                 DOTween.Clear();
                 Destroy(_currentLevel.gameObject);
             }
+
             _currentLevel = Instantiate(_Levels[loadIndex], transform);
             SetSettings();
-            
+
             DidLevelLoad?.Invoke();
         }
 

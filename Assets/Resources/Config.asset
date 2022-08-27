@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94253124d70146d4b563642d60de7b63, type: 3}
   m_Name: Config
   m_EditorClassIdentifier: 
-  LevelIndex: 0
-  Score: 0
+  LevelIndex: 1
+  Score: 150
   SuccessScoreValue: 50
   ScoreAnimationDuration: 1
-  DragSpeed: 0.1
+  DragSpeed: 0.05
   RoadLimit: 3
+  StackPivotRotationSpeed: 50
+  StackRotateAngleLimit: 50
   StaggerDuration: 1
   StaggerOffset: 0.05
   LevelEndOffset: {x: 0, y: 2, z: 1}

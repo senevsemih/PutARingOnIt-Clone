@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _SplineFollower: {fileID: 944759412402921158}
+  _StackPivot: {fileID: 9200505880084795701}
   _Graphic: {fileID: 944759412411148639}
   _PhysicsListener: {fileID: 8296674208469788397}
 --- !u!114 &3389730640792780575
@@ -256,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _StackConfig:
     StackMaxSpeed: 20
-    StackSpeedDecreaseRate: 1
+    StackSpeedDecreaseRate: 0.1
   _StackStartPosition: {fileID: 9200505880084795701}
   _PhysicsListener: {fileID: 8296674208469788397}
 --- !u!114 &944759412402921158

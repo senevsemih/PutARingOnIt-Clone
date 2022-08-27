@@ -23,7 +23,7 @@ namespace PutARingOnIt.GameElements.Player
         private void Awake()
         {
             _PhysicsListener.TriggerEnter += PhysicsListenerOnTriggerEnter;
-            GameManager.DidLevelLoad += GameManagerOnDidLevelLoad;
+            GameController.DidLevelLoad += GameManagerOnDidLevelLoad;
         }
 
         private void GameManagerOnDidLevelLoad() =>

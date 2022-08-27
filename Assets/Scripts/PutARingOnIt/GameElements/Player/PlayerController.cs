@@ -4,6 +4,7 @@ using Dreamteck.Splines;
 using PutARingOnIt.GameElements.Controllers;
 using PutARingOnIt.GameElements.Obstacles;
 using PutARingOnIt.Other;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PutARingOnIt.GameElements.Player
@@ -13,10 +14,13 @@ namespace PutARingOnIt.GameElements.Player
         public static event Action DidReachEnd;
 
         [SerializeField] private SplineFollower _SplineFollower;
+        [SerializeField] private Transform _StackPivot;
         [Space] [SerializeField] private PlayerGraphic _Graphic;
         [SerializeField] private PhysicsListener _PhysicsListener;
 
         private GameConfig _config;
+        private bool _isStackRotateActive;
+        [ShowInInspector, ReadOnly] private Vector3 _deltaPos;
 
         private void Awake()
         {
@@ -24,13 +28,20 @@ namespace PutARingOnIt.GameElements.Player
 
             InputController.DidTap += InputControllerOnDidTap;
             InputController.DidDrag += InputDragHandlerOnDidDrag;
+            InputController.DidDragEnd += InputControllerOnDidDragEnd;
             _PhysicsListener.TriggerEnter += PhysicsListenerOnTriggerEnter;
+        }
+
+        private void Update()
+        {
+            if (_isStackRotateActive) Rotate(_deltaPos.x);
         }
 
         public void Init(SplineComputer spline)
         {
             _Graphic.StateChangeTo(HandAnimState.Idle);
 
+            _isStackRotateActive = true;
             _SplineFollower.spline = spline;
             _SplineFollower.SetPercent(0);
             _SplineFollower.onEndReached += SplineFollowerOnEndReached;
@@ -40,6 +51,7 @@ namespace PutARingOnIt.GameElements.Player
 
         private void InputDragHandlerOnDidDrag(Vector3 deltaPos)
         {
+            _deltaPos = deltaPos;
             var motionOffset = _SplineFollower.motion.offset;
             var newOffsetX = motionOffset.x + deltaPos.x * _config.DragSpeed;
             newOffsetX = Mathf.Clamp(newOffsetX, -_config.RoadLimit, _config.RoadLimit);
@@ -47,6 +59,8 @@ namespace PutARingOnIt.GameElements.Player
 
             _SplineFollower.motion.offset = newOffset;
         }
+
+        private void InputControllerOnDidDragEnd() => _deltaPos = Vector3.zero;
 
         private void PhysicsListenerOnTriggerEnter(Collider other)
         {
@@ -56,6 +70,7 @@ namespace PutARingOnIt.GameElements.Player
 
         private void SplineFollowerOnEndReached(double value)
         {
+            _isStackRotateActive = false;
             _SplineFollower.onEndReached -= SplineFollowerOnEndReached;
             _SplineFollower.follow = false;
 
@@ -70,6 +85,22 @@ namespace PutARingOnIt.GameElements.Player
                     _Graphic.StateChangeTo(HandAnimState.Shake);
                     DidReachEnd?.Invoke();
                 });
+        }
+
+        private void Rotate(float value)
+        {
+            var currentAngles = _StackPivot.rotation;
+
+            var targetAngles = value switch
+            {
+                0 => Quaternion.Euler(Vector3.zero),
+                < 0 => Quaternion.Euler(new Vector3(0f, 0f, -_config.StackRotateAngleLimit)),
+                > 0 => Quaternion.Euler(new Vector3(0f, 0f, _config.StackRotateAngleLimit)),
+                _ => default
+            };
+
+            _StackPivot.rotation = Quaternion.Lerp(currentAngles, targetAngles,
+                _config.StackPivotRotationSpeed * Time.deltaTime);
         }
 
         private void Stagger()
