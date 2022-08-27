@@ -31,7 +31,26 @@ namespace PutARingOnIt.Other
         [FoldoutGroup("Stack")] public Vector2 StackThrowRangeZ;
         [FoldoutGroup("Stack")] public float StackThrowForce;
 
-        public void IncreaseLevelIndex() => LevelIndex++;
+        public void IncreaseLevelIndex()
+        {
+            LevelIndex++;
+            
+            PlayerPrefs.SetInt("SavedLevelIndex", LevelIndex);
+            PlayerPrefs.SetInt("SavedScore", Score);
+            PlayerPrefs.Save();
+        }
+
+        public static int GetLevel()
+        {
+            var index = PlayerPrefs.HasKey("SavedLevelIndex") ? PlayerPrefs.GetInt("SavedLevelIndex") : 0;
+            return index;
+        }
+        
+        public static int GetScore()
+        {
+            var score = PlayerPrefs.HasKey("SavedScore") ? PlayerPrefs.GetInt("SavedScore") : 0;
+            return score;
+        }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void OnLoad() => Instance = Resources.Load<GameConfig>("Config");

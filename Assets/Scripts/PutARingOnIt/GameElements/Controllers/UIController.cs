@@ -35,8 +35,8 @@ namespace PutARingOnIt.GameElements.Controllers
             _ScoreUI.SetActive(true);
             _StartUI.SetActive(true);
 
-            _ScoreText.text = $"{_config.Score}";
-            _LevelText.text = $"Level {_config.LevelIndex + 1}";
+            _ScoreText.text = $"{GameConfig.GetScore()}";
+            _LevelText.text = $"Level {GameConfig.GetLevel() + 1}";
         }
 
         private void InputControllerOnDidTap()

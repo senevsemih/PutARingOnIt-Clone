@@ -33,7 +33,7 @@ namespace PutARingOnIt.GameElements.Controllers
 
         private void LevelLoader()
         {
-            var currentLevelIndex = _config.LevelIndex;
+            var currentLevelIndex = GameConfig.GetLevel();
             int loadIndex;
 
             if (currentLevelIndex <= _Levels.Count - 1)
