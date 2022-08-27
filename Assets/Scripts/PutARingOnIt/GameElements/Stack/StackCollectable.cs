@@ -34,7 +34,7 @@ namespace PutARingOnIt.GameElements.Stack
 
             _Rotate.SetActive(false);
             _graphicTransform.localPosition = Vector3.zero;
-            _graphicTransform.eulerAngles = Vector3.zero;
+            _graphicTransform.localEulerAngles = Vector3.zero;
         }
 
         public StackCollectableType GetCollectableType() => _Type;

@@ -23,7 +23,11 @@ namespace PutARingOnIt.GameElements.Controllers
             UIController.DidLevelPass += OnDidLevelPass;
         }
 
-        private void Start() => LevelLoader();
+        private void Start()
+        {
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
+            LevelLoader();
+        }
 
         private void OnDidLevelPass() => LevelLoader();
 

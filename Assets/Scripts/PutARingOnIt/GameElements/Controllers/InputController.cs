@@ -12,6 +12,14 @@ namespace PutARingOnIt.GameElements.Controllers
         public static event Action<Vector3> DidDrag;
         public static event Action DidDragEnd;
 
+        private Vector3? _lastPos;
+        [ShowInInspector, ReadOnly] private float _screenWidth;
+        [ShowInInspector, ReadOnly] private float _screenHeight;
+
+        [ShowInInspector, ReadOnly] private bool _isDragActive;
+        [ShowInInspector, ReadOnly] private bool _isInputActive;
+
+
 #if UNITY_EDITOR
         private static bool IsInput => Input.GetMouseButton(0);
         private static Vector3 InputPos => Input.mousePosition;
@@ -20,14 +28,16 @@ namespace PutARingOnIt.GameElements.Controllers
         private static Vector3 InputPos => Input.touches[0].position;
 #endif
 
-        private Vector3? _lastPosition;
-        [ShowInInspector, ReadOnly] private bool _isDragActive;
-        [ShowInInspector, ReadOnly] private bool _isInputActive;
-
         private void Awake()
         {
             GameController.DidLevelLoad += GameManagerOnDidLevelLoad;
             PlayerController.DidReachEnd += PlayerControllerOnDidReachEnd;
+        }
+
+        private void Start()
+        {
+            _screenWidth = Screen.width;
+            _screenHeight = Screen.height;
         }
 
         private void GameManagerOnDidLevelLoad() => _isInputActive = true;
@@ -43,31 +53,32 @@ namespace PutARingOnIt.GameElements.Controllers
             if (EventSystem.current && EventSystem.current.currentSelectedGameObject) return;
 
             if (!_isInputActive) return;
-            if (Input.GetMouseButtonDown(0) && !_isDragActive)
-            {
-                _isDragActive = true;
-                DidTap?.Invoke();
-            }
-
-            if (!_isDragActive) return;
-
             var isInput = IsInput;
-            var inputPos = InputPos;
-            inputPos.y = 0;
 
-            if (isInput && _lastPosition.HasValue)
+            switch (isInput)
             {
-                var v = inputPos - _lastPosition.Value;
-                var direction = v.normalized;
-                DidDrag?.Invoke(direction);
-            }
-            else
-            {
-                _lastPosition = null;
-                DidDragEnd?.Invoke();
-            }
+                case true:
+                    var inputPos = InputPos;
+                    if (_lastPos.HasValue && _isDragActive)
+                    {
+                        var delta = inputPos - _lastPos.Value;
+                        var normalizedDelta = delta / _screenWidth;
 
-            if (isInput) _lastPosition = inputPos;
+                        DidDrag?.Invoke(normalizedDelta);
+                    }
+                    else if (!_isDragActive)
+                    {
+                        _isDragActive = true;
+                        DidTap?.Invoke();
+                    }
+
+                    _lastPos = inputPos;
+                    break;
+                case false when _lastPos.HasValue:
+                    _lastPos = null;
+                    DidDragEnd?.Invoke();
+                    break;
+            }
         }
     }
 }

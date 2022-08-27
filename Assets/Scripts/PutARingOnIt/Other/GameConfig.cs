@@ -19,10 +19,10 @@ namespace PutARingOnIt.Other
 
         [FoldoutGroup("Player")] public float StackPivotRotationSpeed;
         [FoldoutGroup("Player")] public float StackRotateAngleLimit;
-        [Space]
+        [Space] 
         [FoldoutGroup("Player")] public float StaggerDuration;
         [FoldoutGroup("Player")] public float StaggerOffset;
-        [Space]
+        [Space] 
         [FoldoutGroup("Player")] public Vector3 LevelEndOffset;
         [FoldoutGroup("Player")] public float LevelEndMoveOffsetDuration;
 

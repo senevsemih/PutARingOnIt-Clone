@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MoreMountains.NiceVibrations;
 using UnityEngine;
 
 namespace PutARingOnIt.GameElements.Stack
@@ -23,8 +22,6 @@ namespace PutARingOnIt.GameElements.Stack
 
         public void Increase(StackCollectable newCollectable)
         {
-            MMVibrationManager.Haptic(HapticTypes.SoftImpact);
-
             newCollectable.ResetTransform();
 
             var target = GetTargetTransformForItemIndex(StackCount);

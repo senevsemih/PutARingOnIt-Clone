@@ -24,6 +24,7 @@ namespace PutARingOnIt.GameElements.Player
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
             _config = GameConfig.Instance;
 
             InputController.DidTap += InputControllerOnDidTap;
@@ -70,6 +71,8 @@ namespace PutARingOnIt.GameElements.Player
 
         private void SplineFollowerOnEndReached(double value)
         {
+            _StackPivot.localRotation = Quaternion.Euler(Vector3.zero);
+            
             _isStackRotateActive = false;
             _SplineFollower.onEndReached -= SplineFollowerOnEndReached;
             _SplineFollower.follow = false;

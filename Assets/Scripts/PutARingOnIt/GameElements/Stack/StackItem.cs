@@ -84,7 +84,7 @@ namespace PutARingOnIt.GameElements.Stack
         {
             _target = null;
             _scaleAnim.Kill();
-            _transform.DOMove(target.position, 0.05f).OnComplete(() => stackRefresh?.Invoke());
+            _transform.DOMove(target.position, 0.025f).OnComplete(() => stackRefresh?.Invoke());
         }
 
         public StackCollectableType GetCollectableType() => _collectable.GetCollectableType();
